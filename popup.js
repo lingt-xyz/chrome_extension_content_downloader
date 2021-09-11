@@ -1,24 +1,20 @@
-// Initialize button with user's preferred color
-let changeColor = document.getElementById("changeColor");
+let page = document.getElementById("contentDiv");
+const presetOptions = ["img"];
+const imageDivClassName = 'imgDiv';
 
-chrome.storage.sync.get("color", ({ color }) => {
-  changeColor.style.backgroundColor = color;
-});
-
-// When the button is clicked, inject setPageBackgroundColor into current page
-changeColor.addEventListener("click", async () => {
-  let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-
-  chrome.scripting.executeScript({
-    target: { tabId: tab.id },
-    function: setPageBackgroundColor,
-  });
-});
-
-// The body of this function will be executed as a content script inside the
-// current page
-function setPageBackgroundColor() {
-  chrome.storage.sync.get("color", ({ color }) => {
-    document.body.style.backgroundColor = color;
-  });
+function addImages(items) {
+  let imageDiv = document.createElement("div");
+  imageDiv.className = imageDivClassName
+  for (let item of items) {
+    let element = document.createElement("img");
+    element.src = item;
+    imageDiv.appendChild(element);
+  }
+  page.appendChild(imageDiv);
 }
+
+chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+  chrome.tabs.sendMessage(tabs[0].id, {options: presetOptions}, function(response) {
+    addImages(response.items);
+  });
+});
