@@ -2,3 +2,11 @@ img {
     max-height:300px; 
     max-width:400px;
 }
+
+.contentDiv {
+    max-width:420px;
+}
+
+.images {
+    max-width:400px;
+}
