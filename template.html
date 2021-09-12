@@ -6,7 +6,7 @@
   <body>
     <div id="contentDiv">
       <div class="images">
-        <div class="image" onclick=checked()>
+        <div class="image">
           <div><button>Select</button></div>
           <div>
             <img src="https://cdn.phenompeople.com/CareerConnectResources/ETSYGLOBAL/images/Hero-image-final-edit-2x-1603210175286.jpg" />
@@ -15,10 +15,24 @@
       </div>
     </div>
     <script>
-      function checked() {
+      document
+        .querySelectorAll('div.image') // select the image div
+        .forEach((item, index) => {
+          item.addEventListener('click', function(e) { // register a click listener
+            // const clickedElement = e.target; // the event object holds information about the clicked element
+            toggle(item);
+          })
+        });
         
+      function toggle(item) {
+        if (item.dataset.selected){
+          item.style.border = "none";
+          item.dataset.selected = false;  
+        }else{
+          item.style.border = "thick solid #0000FF";
+          item.dataset.selected = true;
+        }
       }
-      document.getElementById(i).style.visibility='visible';
     </script>
   </body>
 </html>
