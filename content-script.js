@@ -1,9 +1,6 @@
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        if (request.options) {
-            console.log(getContent())
-            sendResponse({items: getContent()});
-        }
+        sendResponse({items: getContent(request.options), html: getHtml(request.querySelector)});
     }
 );
 
@@ -18,3 +15,8 @@ function getContent(options) {
     return images;
 }
 
+function getHtml(querySelector) {
+    pdfHtml = document.querySelector(querySelector).outerHTML;
+    pdfHtml = document.getElementById('__docusaurus').outerHTML;
+    return pdfHtml;
+}

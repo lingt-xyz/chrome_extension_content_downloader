@@ -31,9 +31,6 @@
       ]
     }
   ],
-  "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline' https://music.yandex.ru/;"
-  },
   "icons": {
     "16": "/images/get_started16.png",
     "32": "/images/get_started32.png",
