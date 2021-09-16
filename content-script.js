@@ -1,6 +1,7 @@
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        sendResponse({items: getContent(request.options), html: getHtml(request.querySelector)});
+        let [pdfHtml, clientHeight] = getHtml(request.querySelector);
+        sendResponse({items: getContent(request.options), html: pdfHtml, height: clientHeight});
     }
 );
 
@@ -16,7 +17,8 @@ function getContent(options) {
 }
 
 function getHtml(querySelector) {
-    pdfHtml = document.querySelector(querySelector).outerHTML;
-    pdfHtml = document.getElementById('__docusaurus').outerHTML;
-    return pdfHtml;
+    let element = document.querySelector(querySelector);
+    let clientHeight = element.clientHeight;
+    let pdfHtml = element.outerHTML;
+    return [pdfHtml, clientHeight];
 }
